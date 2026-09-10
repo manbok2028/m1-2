@@ -101,7 +101,9 @@ def ask_assistant(question: str, summary: DataSummary, settings: Settings) -> tu
             temperature=0.3,
             messages=messages,
             tools=TOOLS,
-            tool_choice="auto",
+            # Every answer starts from a fresh aggregate lookup. The second turn is free
+            # to answer normally after the read-only tool result has been supplied.
+            tool_choice="required" if not tools_used else "auto",
         )
         message = completion.choices[0].message
         if not message.tool_calls:
