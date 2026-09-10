@@ -1,6 +1,8 @@
 __pycache__/
 *.py[cod]
 .venv/
+.mcp-runtime/
+.mcp-venv/
 .env
 *.json
 !frontend/package.json

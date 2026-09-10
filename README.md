@@ -35,9 +35,12 @@ m1-2/
 │   ├── app/services/analysis.py      # 지표별 기간·통계·추세 계산
 │   ├── app/services/ecos.py          # 검증된 ECOS 핵심 지표 수집
 │   ├── app/services/repository.py    # Firestore data·conversations
+│   ├── app/mcp_server.py              # 별도 MCP 채널의 읽기 전용 도구
 │   ├── scripts/import_ecos.py        # 실제 ECOS → Firestore 수집
 │   ├── scripts/seed_firestore.py     # 로컬 모의값 120건 시드
 │   └── render.yaml
+│   ├── requirements.txt               # FastAPI 서버 의존성
+│   └── requirements-mcp.txt           # 별도 MCP 런타임 의존성
 ├── frontend/                         # Vercel 바닐라 웹
 │   ├── index.html
 │   ├── css/style.css
@@ -67,7 +70,7 @@ GPT는 답변에 필요한 경우에만 `get_macro_summary`, `get_indicator_snap
      → 집계 결과를 tool 메시지로 전달 → 안전 고지가 포함된 답변 → 대화 저장
 ```
 
-추세 Canvas 그래프, CSV 내보내기, 다크 모드도 포함했습니다. 동작 근거와 확인 절차는 [보너스 기능 안내](docs/bonus-features.md)에 정리했습니다.
+추세 Canvas 그래프, CSV 내보내기, 다크 모드도 포함했습니다. 같은 읽기 전용 도구는 MCP 표준 입출력 채널로도 제공됩니다. 동작 근거와 확인 절차는 [보너스 기능 안내](docs/bonus-features.md)에 정리했습니다.
 
 ## 로컬 실행
 

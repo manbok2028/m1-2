@@ -1,6 +1,6 @@
 # 보너스 기능 실행 안내
 
-## 1. AI 도구 호출(Function Calling)
+## 1. AI 도구 호출(Function Calling)과 MCP 채널
 
 체납리셋 Signal AI의 GPT는 모든 데이터를 임의로 읽지 않는다. 질문이 현재 거시 신호나 특정 지표의 최신 상태를 확인할 필요가 있을 때만 아래 읽기 전용 도구를 선택할 수 있다.
 
@@ -22,6 +22,19 @@
 ```
 
 도구는 `backend/app/services/ai.py`의 `TOOLS`, `run_tool()`에 정의했다. Firestore 쓰기·삭제 기능, 개인 정보, 서비스 계정·API 키에는 접근할 수 없다. 화면의 AI 답변 아래 `[이번 답변에서 조회한 내부 도구: ...]` 표시로 호출 사실을 확인할 수 있다.
+
+동일한 두 읽기 도구는 `backend/app/mcp_server.py`에서 MCP 표준 입력/출력 서버로도 노출한다. 외부 MCP 지원 클라이언트는 아래 명령으로 이 프로젝트의 개인용 MCP 서버를 실행해 연결할 수 있다.
+
+```powershell
+cd backend
+python -m venv .mcp-venv
+.mcp-venv\Scripts\python -m pip install -r requirements-mcp.txt
+.mcp-venv\Scripts\python -m app.mcp_server
+```
+
+MCP 런타임은 FastAPI 서버 가상환경과 분리했다. MCP SDK와 웹 서버가 서로 다른 Starlette 버전을 요구할 수 있어, 분리하면 웹 API 배포 의존성이 영향을 받지 않는다.
+
+MCP 서버는 표준 입출력 프로토콜을 사용하므로 단독 실행 시 화면에 일반 문장을 출력하지 않고 클라이언트 요청을 기다리는 것이 정상이다. MCP Inspector 또는 지원 클라이언트에서 `get_macro_summary`, `get_indicator_snapshot`을 호출해 결과를 확인한다. 이 설계는 웹 채팅의 함수 호출과 외부 채널이 같은 분석 범위·안전 한계를 유지하게 한다.
 
 `OPENAI_API_KEY` 없이 `AI_DEMO_MODE=true`인 로컬 학습 모드에서는 외부 GPT 호출·과금 대신 `get_macro_summary` 사용 사실을 포함한 로컬 요약 응답을 제공한다. 실제 배포에서는 환경 변수의 OpenAI 키로 GPT 함수 호출 흐름이 동작한다.
 

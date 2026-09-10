@@ -10,7 +10,7 @@
 | 데이터 CRUD 4개 + summary | POST/GET/PUT/DELETE와 `GET /api/data/summary` | `backend/app/routers/data.py` |
 | 대화 기록 저장·조회·삭제·불러오기 | POST/GET/DELETE, `GET /api/conversations/{id}` | `backend/app/routers/conversations.py` |
 | AI 채팅·컨텍스트 주입 | 데이터 요약 → 안전 고지 포함 시스템 프롬프트 → GPT → 대화 자동 저장 | `chat.py`, `ai.py` |
-| 보너스 AI 도구 호출 | GPT가 필요할 때 거시 요약 또는 특정 지표 상태를 읽기 전용 함수로 호출하고, 도구명을 응답에 기록 | `backend/app/services/ai.py`, `ChatResponse.tools_used` |
+| 보너스 AI 도구 호출·MCP | GPT가 필요할 때 거시 요약 또는 특정 지표 상태를 읽기 전용 함수로 호출하고, 같은 도구를 MCP stdio 서버로도 제공 | `backend/app/services/ai.py`, `backend/app/mcp_server.py` |
 | 채팅 UX | 질문·답변·로딩·오류 표시 | `frontend/index.html`, `frontend/js/app.js` |
 | 데이터 관리 UX | 지표·값·단위·출처·메모 추가, 수정·삭제, 목록 | `frontend/index.html`, `frontend/js/app.js` |
 | 대화 불러오기 UX | 목록 클릭 뒤 선택한 messages 재표시 | `frontend/js/app.js` |
