@@ -23,6 +23,7 @@
 | 지표 데이터 CRUD | 기준일·지표·값·단위·출처·메모 추가, 수정, 삭제 | `backend/app/routers/data.py` |
 | 요약과 시각화 | 기간·건수·기본 통계·최근 추세·가계대출 연체율 그래프 | `/api/data/summary`, `/statistics` |
 | 대화 기록 | 대화 목록, 특정 대화의 전체 messages 불러오기, 삭제 | `backend/app/routers/conversations.py` |
+| 보너스 AI 도구 호출 | GPT가 필요 시 집계 요약·특정 지표 상태를 읽기 전용 함수로 다시 조회 | `backend/app/services/ai.py` |
 | 보너스 UX | Canvas 추세 그래프, CSV 내보내기, 다크 모드 | `frontend/js/app.js` |
 
 ## 프로젝트 구조
@@ -56,6 +57,17 @@ m1-2/
 ```
 
 GPT는 Firestore에 직접 접근하지 않습니다. 서버가 필요한 집계 요약만 전달하며 API 키·서비스 계정은 브라우저에 노출하지 않습니다.
+
+## 보너스: AI 도구 호출과 UX 고도화
+
+GPT는 답변에 필요한 경우에만 `get_macro_summary`, `get_indicator_snapshot`을 호출합니다. 두 도구는 저장된 **집계 지표만 읽는 함수**이며, 쓰기·삭제·개인 데이터 접근 권한은 없습니다. 화면에는 이번 답변에서 사용한 도구명을 표시해 호출 근거를 확인할 수 있습니다.
+
+```text
+질문 → GPT가 도구 필요성 판단 → 읽기 전용 내부 도구 호출
+     → 집계 결과를 tool 메시지로 전달 → 안전 고지가 포함된 답변 → 대화 저장
+```
+
+추세 Canvas 그래프, CSV 내보내기, 다크 모드도 포함했습니다. 동작 근거와 확인 절차는 [보너스 기능 안내](docs/bonus-features.md)에 정리했습니다.
 
 ## 로컬 실행
 

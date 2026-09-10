@@ -24,6 +24,7 @@ def test_data_crud_summary_chat_and_conversation_history():
         chat = client.post("/api/chat", json={"question": "최근 연체 위험 신호는 어때?"})
         assert chat.status_code == 200
         assert chat.json()["model"] == "local-summary-preview"
+        assert chat.json()["tools_used"] == ["get_macro_summary"]
 
         conversations = client.get("/api/conversations")
         assert conversations.status_code == 200

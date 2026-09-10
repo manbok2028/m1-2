@@ -79,6 +79,7 @@ class ChatResponse(BaseModel):
     answer: str
     summary: DataSummary
     model: str
+    tools_used: list[str] = Field(default_factory=list, description="AI가 이번 답변에서 호출한 내부 읽기 도구")
 
 
 class Message(BaseModel):

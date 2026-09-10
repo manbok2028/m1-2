@@ -18,7 +18,7 @@ def chat(payload: ChatRequest):
         raise HTTPException(status_code=400, detail="먼저 거시경제 지표 데이터를 한 건 이상 추가하세요.")
     summary = build_summary(records)
     try:
-        answer, model = ask_assistant(payload.question, summary, get_settings())
+        answer, model, tools_used = ask_assistant(payload.question, summary, get_settings())
     except RuntimeError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
     except Exception as error:
@@ -32,4 +32,10 @@ def chat(payload: ChatRequest):
             Message(role="assistant", content=answer, created_at=now),
         ],
     )
-    return {"conversation_id": conversation["id"], "answer": answer, "summary": summary, "model": model}
+    return {
+        "conversation_id": conversation["id"],
+        "answer": answer,
+        "summary": summary,
+        "model": model,
+        "tools_used": tools_used,
+    }
