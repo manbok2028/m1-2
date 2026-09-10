@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.json
+!frontend/package.json
+!frontend/vercel.json
+node_modules/

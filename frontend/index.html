@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="공개 거시경제 지표를 바탕으로 체납 리스크 신호를 설명하는 AI 비서" />
+    <title>체납리셋 Signal AI | 거시경제 AI 비서</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#chat">체납<span>리셋</span> Signal AI</a>
+      <nav aria-label="주요 메뉴">
+        <a href="#chat">AI 채팅</a>
+        <a href="#data">지표 관리</a>
+        <a href="#history">대화 기록</a>
+      </nav>
+      <button id="theme-toggle" class="icon-button" type="button" aria-label="다크 모드 전환">◐</button>
+    </header>
+
+    <main class="app-shell">
+      <section class="intro" aria-labelledby="intro-title">
+        <p class="eyebrow">MY DATA · MY AI ASSISTANT</p>
+        <h1 id="intro-title">체납 위험을 단정하지 않고<br /><em>신호를 읽는 AI 비서</em></h1>
+        <p>공개 거시경제 지표를 요약해 금리·연체율 등 변화의 맥락과 한계를 설명합니다.</p>
+        <p id="connection-status" class="status">서버에 연결하는 중…</p>
+      </section>
+
+      <section id="summary" class="summary-panel" aria-labelledby="summary-title">
+        <div><p class="eyebrow">CURRENT SUMMARY</p><h2 id="summary-title">거시경제 신호 요약</h2></div>
+        <div id="summary-content" class="summary-grid" aria-live="polite"></div>
+      </section>
+
+      <section id="chat" class="content-card chat-section" aria-labelledby="chat-title">
+        <div class="section-heading"><div><p class="eyebrow">CONTEXT-AWARE CHAT</p><h2 id="chat-title">AI에게 체납 리스크 신호를 물어보세요</h2></div><span class="chip">요약 주입</span></div>
+        <div id="chat-messages" class="chat-messages" aria-live="polite">
+          <article class="message assistant"><strong>체납리셋 Signal AI</strong><p>금리·가계대출 연체율 등 집계 지표를 불러오고 있어요. “최근 연체 위험 신호는 어때?”처럼 질문해 보세요.</p></article>
+        </div>
+        <form id="chat-form" class="chat-form">
+          <label class="sr-only" for="question">AI에게 할 질문</label>
+          <input id="question" name="question" maxlength="500" required placeholder="예: 금리와 연체율의 최근 추세를 비교해줘" />
+          <button type="submit">보내기 <span>→</span></button>
+        </form>
+        <p id="chat-error" class="form-message" role="alert"></p>
+      </section>
+
+      <section id="data" class="content-card" aria-labelledby="data-title">
+        <div class="section-heading"><div><p class="eyebrow">DATA CRUD</p><h2 id="data-title">거시경제 지표 관리</h2></div><button id="export-csv" class="secondary-button" type="button">CSV 내보내기</button></div>
+        <div class="data-layout">
+          <form id="data-form" class="record-form">
+            <input id="record-id" type="hidden" />
+            <label>날짜<input id="record-date" type="date" required /></label>
+            <label>지표<select id="record-indicator" required><option value="base_rate">기준금리</option><option value="household_delinquency_rate">가계대출 연체율(1일 이상)</option><option value="consumer_price_index">소비자물가지수(CPI)</option><option value="self_employed_business_signal">자영업 상황 지표</option><option value="tax_arrears_annual">국세 체납 통계(연간)</option></select></label>
+            <label>값<input id="record-value" type="number" min="0" step="0.001" required placeholder="예: 3.25" /></label>
+            <label>단위<input id="record-unit" type="text" maxlength="30" value="%" required /></label>
+            <label>출처<input id="record-source" type="text" maxlength="100" value="한국은행 ECOS" required /></label>
+            <label>메모<input id="record-memo" type="text" maxlength="300" required placeholder="예: 공개 월별 집계지표·체납 직접지표 아님" /></label>
+            <div class="form-actions"><button id="record-submit" type="submit">기록 추가</button><button id="record-cancel" class="text-button" type="button" hidden>수정 취소</button></div>
+            <p id="data-error" class="form-message" role="alert"></p>
+          </form>
+          <div class="chart-wrap"><canvas id="trend-chart" width="640" height="260" aria-label="가계대출 연체율 추세 그래프"></canvas><p>가계대출 연체율 대리 지표의 최근 월별 추세</p></div>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>기준일</th><th>지표</th><th>값</th><th>출처</th><th>메모</th><th>관리</th></tr></thead><tbody id="data-list"></tbody></table></div>
+      </section>
+
+      <section id="history" class="content-card" aria-labelledby="history-title">
+        <div class="section-heading"><div><p class="eyebrow">CONVERSATIONS</p><h2 id="history-title">저장된 대화</h2></div><span id="conversation-count" class="chip">0개</span></div>
+        <div class="history-layout"><aside id="conversation-list" class="conversation-list" aria-label="이전 대화 목록"></aside><div id="loaded-conversation" class="loaded-conversation"><p>왼쪽 목록에서 대화를 선택하면 전체 메시지를 다시 볼 수 있어요.</p></div></div>
+      </section>
+    </main>
+    <footer>체납리셋 Signal AI · 공개 집계지표의 요약을 바탕으로 신호를 설명하며, 개인 체납·법률·세무 판단을 제공하지 않습니다.</footer>
+    <script src="js/runtime-config.js"></script>
+    <script src="js/app.js" type="module"></script>
+  </body>
+</html>
