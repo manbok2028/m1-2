@@ -134,8 +134,8 @@ class FirestoreRepository:
 
 
 def get_repository(settings: Settings):
-    if settings.firebase_service_account_json:
-        return FirestoreRepository(settings.firebase_service_account_json)
+    if settings.firebase_credentials:
+        return FirestoreRepository(settings.firebase_credentials)
     if settings.is_production:
         raise RuntimeError("배포 환경에는 FIREBASE_SERVICE_ACCOUNT_JSON이 필요합니다.")
     return MemoryRepository()

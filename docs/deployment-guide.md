@@ -4,7 +4,8 @@
 
 1. Firebase Console에서 `tax-reset-signal-ai` 프로젝트를 만들고 **Firestore Database**를 생성한다.
 2. 프로젝트 설정 → 서비스 계정 → 새 비공개 키 생성으로 JSON을 내려받는다.
-3. JSON 전체를 한 줄 문자열로 바꿔 `FIREBASE_SERVICE_ACCOUNT_JSON`에만 넣는다. 파일 자체를 저장소에 넣지 않는다.
+3. 배포용으로는 JSON 전체를 한 줄 문자열로 바꿔 Render의 `FIREBASE_SERVICE_ACCOUNT_JSON`에만 넣는다. 파일 자체를 저장소에 넣지 않는다.
+4. 로컬 테스트는 내려받은 파일을 `backend/firebase-service-account.json`에 저장하고 `.env`의 `FIREBASE_SERVICE_ACCOUNT_FILE=firebase-service-account.json`을 설정할 수 있다. 이 파일은 `.gitignore`에 포함되어 GitHub에 올라가지 않는다.
 4. Firestore 규칙은 서비스 계정이 서버에서 쓰기 가능하도록 설정하되, 브라우저 클라이언트에 서비스 계정 키를 주지 않는다. 개인 체납 자료를 넣지 않고 공개 집계지표만 사용한다.
 
 ## 2. Render 백엔드

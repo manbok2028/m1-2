@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 .mcp-runtime/
 .mcp-venv/
+backend/firebase-service-account.json
 .env
 *.json
 !frontend/package.json

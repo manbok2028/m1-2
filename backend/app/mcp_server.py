@@ -17,7 +17,7 @@ mcp = FastMCP(
 
 def _summary():
     settings = get_settings()
-    if settings.firebase_service_account_json:
+    if settings.firebase_credentials:
         # Delay the Firebase import so a local MCP host can inspect the public sample tools
         # before credentials are configured. Production reads the same Firestore data collection.
         from app.services.repository import get_repository

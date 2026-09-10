@@ -8,9 +8,9 @@ from app.services.sample_data import make_sample_records
 
 def main() -> None:
     settings = get_settings()
-    if not settings.firebase_service_account_json:
-        raise RuntimeError("FIREBASE_SERVICE_ACCOUNT_JSON을 .env에 설정하세요.")
-    repository = FirestoreRepository(settings.firebase_service_account_json)
+    if not settings.firebase_credentials:
+        raise RuntimeError("Firebase 서비스 계정을 .env에 설정하세요.")
+    repository = FirestoreRepository(settings.firebase_credentials)
     if repository.list_data():
         print("data 컬렉션에 이미 데이터가 있어 시드 생성을 건너뜁니다.")
         return

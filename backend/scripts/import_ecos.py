@@ -8,9 +8,9 @@ from app.services.repository import FirestoreRepository
 
 def main() -> None:
     settings = get_settings()
-    if not settings.firebase_service_account_json or not settings.ecos_api_key:
-        raise RuntimeError("FIREBASE_SERVICE_ACCOUNT_JSON과 ECOS_API_KEY를 .env에 설정하세요.")
-    repository = FirestoreRepository(settings.firebase_service_account_json)
+    if not settings.firebase_credentials or not settings.ecos_api_key:
+        raise RuntimeError("Firebase 서비스 계정과 ECOS_API_KEY를 .env에 설정하세요.")
+    repository = FirestoreRepository(settings.firebase_credentials)
     records = fetch_verified_core_series(settings.ecos_api_key)
     existing_keys = {
         (str(item["date"]), item["indicator"])
