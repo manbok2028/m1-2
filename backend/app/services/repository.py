@@ -90,8 +90,12 @@ class FirestoreRepository:
     def create_data(self, payload: DataCreate) -> dict:
         document = self.db.collection(self.data_collection).document()
         now = _now()
-        document.set({**payload.model_dump(), "created_at": now, "updated_at": now})
-        return {"id": document.id, **payload.model_dump(), "created_at": now, "updated_at": now}
+        # Firestore accepts timestamps but not Python ``date`` objects.  Keep the
+        # calendar key as ISO-8601 text so chronological ``order_by('date')`` is
+        # stable and the API can still validate it as a date on response.
+        record = payload.model_dump(mode="json")
+        document.set({**record, "created_at": now, "updated_at": now})
+        return {"id": document.id, **record, "created_at": now, "updated_at": now}
 
     def list_data(self) -> list[dict]:
         documents = self.db.collection(self.data_collection).order_by("date").stream()
