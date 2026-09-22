@@ -19,7 +19,10 @@ class Settings(BaseSettings):
     # ALLOWED_ORIGINS override is supplied by the hosting dashboard.
     allowed_origins: str = (
         "http://localhost:5500,http://127.0.0.1:5500,"
-        "https://m1-2.vercel.app"
+        "https://m1-2-manbok2028s-projects.vercel.app"
+    )
+    allowed_origin_regex: str | None = (
+        r"https://m1-2-[a-z0-9-]+-manbok2028s-projects\.vercel\.app"
     )
     ai_demo_mode: bool = True
 
