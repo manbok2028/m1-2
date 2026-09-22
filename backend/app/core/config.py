@@ -15,7 +15,12 @@ class Settings(BaseSettings):
     firebase_service_account_json: str | None = None
     firebase_service_account_file: str | None = None
     ecos_api_key: str | None = None
-    allowed_origins: str = "http://localhost:5500,http://127.0.0.1:5500"
+    # Keep the deployed Vercel client usable even before an optional
+    # ALLOWED_ORIGINS override is supplied by the hosting dashboard.
+    allowed_origins: str = (
+        "http://localhost:5500,http://127.0.0.1:5500,"
+        "https://m1-2.vercel.app"
+    )
     ai_demo_mode: bool = True
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
