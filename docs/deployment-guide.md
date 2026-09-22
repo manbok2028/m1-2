@@ -19,18 +19,18 @@ APP_ENV=production
 AI_DEMO_MODE=false
 OPENAI_API_KEY=실제_OpenAI_키
 FIREBASE_SERVICE_ACCOUNT_JSON={서비스_계정_JSON_전체}
-ALLOWED_ORIGINS=https://배포될-프론트.vercel.app
+ALLOWED_ORIGINS=https://m1-2-manbok2028s-projects.vercel.app
 ```
 
-4. 배포 뒤 `https://[render-service]/health`와 `https://[render-service]/docs`를 확인한다. 두 키를 설정한 뒤 `python -m scripts.import_ecos`로 실제 ECOS 핵심 시계열을 Firestore에 수집한다.
+4. 배포 뒤 `https://tax-reset-signal-ai-api.onrender.com/health`와 `https://tax-reset-signal-ai-api.onrender.com/docs`를 확인한다. 두 키를 설정한 뒤 `python -m scripts.import_ecos`로 실제 ECOS 핵심 시계열을 Firestore에 수집한다.
 
 ## 3. Vercel 프론트엔드
 
 1. 같은 GitHub 저장소를 Vercel 프로젝트로 Import한다.
 2. Root Directory를 `frontend`로 지정한다.
-3. Environment Variables에 `API_BASE_URL=https://[render-service]`를 넣는다.
+3. Environment Variables에 `API_BASE_URL=https://tax-reset-signal-ai-api.onrender.com`를 넣는다.
 4. Deploy한다. 빌드 스크립트가 `js/runtime-config.js`를 생성해 브라우저가 Render API만 호출하게 한다.
-5. 나온 Vercel 주소를 Render `ALLOWED_ORIGINS`에 추가하고 Render를 재배포한다.
+5. 공개 주소 `https://m1-2-manbok2028s-projects.vercel.app`를 Render `ALLOWED_ORIGINS`에 추가하고 Render를 재배포한다. 이 프로젝트는 기본 설정에도 해당 도메인을 포함해, 대시보드 변수를 비워 두어도 공개 운영 주소가 연결되도록 했다.
 
 ## 4. 배포 후 점검
 

@@ -117,8 +117,8 @@ python -m scripts.import_ecos
 
 | 대상 | 배포 방법 | 확인 주소 |
 | --- | --- | --- |
-| Backend | Render Web Service, Root `backend` | `https://[render-url]/docs` |
-| Frontend | Vercel, Root `frontend` | `https://[vercel-url]` |
+| Backend | Render Web Service, Root `backend` | [Swagger API 문서](https://tax-reset-signal-ai-api.onrender.com/docs) |
+| Frontend | Vercel, Root `frontend` | [체납리셋 Signal AI](https://m1-2-manbok2028s-projects.vercel.app) |
 
 구체적인 설정은 [배포 안내](docs/deployment-guide.md)를, 평가 항목별 구현 위치는 [미션 충족표](docs/mission-compliance.md)를 참고하세요.
 
