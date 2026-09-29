@@ -3,6 +3,21 @@ from fastapi.testclient import TestClient
 from app.main import app
 
 
+def test_health_and_warmup_are_ready_and_not_cached():
+    with TestClient(app) as client:
+        health = client.get("/health")
+        assert health.status_code == 200
+        assert health.json()["status"] == "ok"
+        assert health.headers["cache-control"] == "no-store"
+
+        warmup = client.get("/warmup")
+        assert warmup.status_code == 200
+        assert warmup.json()["status"] == "ready"
+        assert warmup.json()["data_ready"] is True
+        assert warmup.json()["record_count"] >= 100
+        assert warmup.headers["cache-control"] == "no-store"
+
+
 def test_data_crud_summary_chat_and_conversation_history():
     with TestClient(app) as client:
         initial = client.get("/api/data")

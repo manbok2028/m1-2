@@ -6,6 +6,7 @@
     <meta name="description" content="공개 거시경제 지표를 바탕으로 체납 리스크 신호를 설명하는 AI 비서" />
     <title>체납리셋 Signal AI | 거시경제 AI 비서</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/cold-start.css" />
   </head>
   <body>
     <header class="site-header">
@@ -23,7 +24,11 @@
         <p class="eyebrow">MY DATA · MY AI ASSISTANT</p>
         <h1 id="intro-title">체납 위험을 단정하지 않고<br /><em>신호를 읽는 AI 비서</em></h1>
         <p>공개 거시경제 지표를 요약해 금리·연체율 등 변화의 맥락과 한계를 설명합니다.</p>
-        <p id="connection-status" class="status">서버에 연결하는 중…</p>
+        <div class="connection-row">
+          <p id="connection-status" class="status" role="status">서버에 연결하는 중…</p>
+          <button id="server-retry" class="retry-button" type="button" hidden>다시 연결</button>
+        </div>
+        <p class="cold-start-note">Render 무료 서버는 장시간 미사용 뒤 첫 연결에 최대 1분 정도 걸릴 수 있습니다. 화면을 닫지 말고 잠시 기다려 주세요.</p>
       </section>
 
       <section id="summary" class="summary-panel" aria-labelledby="summary-title">

@@ -1,6 +1,48 @@
 const API = (window.APP_CONFIG?.API_BASE_URL || "http://localhost:8000").replace(/\/$/, "");
 const $ = (selector) => document.querySelector(selector);
 let records = [];
+const WARMUP_RETRY_DELAYS = [0, 5000, 10000, 15000, 20000];
+
+const sleep = (milliseconds) => new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+
+function setConnectionStatus(message) {
+  $("#connection-status").textContent = message;
+}
+
+async function warmBackend() {
+  let lastError = new Error("서버를 준비하지 못했습니다.");
+
+  for (let attempt = 0; attempt < WARMUP_RETRY_DELAYS.length; attempt += 1) {
+    const delay = WARMUP_RETRY_DELAYS[attempt];
+    if (delay) await sleep(delay);
+    setConnectionStatus(`서버를 깨우는 중입니다… (${attempt + 1}/${WARMUP_RETRY_DELAYS.length})`);
+
+    try {
+      const response = await fetch(`${API}/warmup`, { cache: "no-store" });
+      if (response.ok) return;
+      lastError = new Error(`서버 준비 응답 ${response.status}`);
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError;
+}
+
+async function initializeApp() {
+  $("#server-retry").hidden = true;
+  $("#chat-error").textContent = "";
+
+  try {
+    await warmBackend();
+    await Promise.all([loadData(), loadConversations()]);
+    setConnectionStatus("데이터와 연결되었습니다");
+  } catch (error) {
+    setConnectionStatus("서버 시작에 시간이 걸리고 있습니다");
+    $("#chat-error").textContent = "Render 무료 서버가 시작 중입니다. 최대 1분 뒤 ‘다시 연결’을 눌러 주세요.";
+    $("#server-retry").hidden = false;
+  }
+}
 
 async function request(path, options = {}) {
   const response = await fetch(`${API}${path}`, { headers: { "Content-Type": "application/json", ...options.headers }, ...options });
@@ -85,6 +127,7 @@ function exportCsv() { const rows = [["date", "indicator", "value", "unit", "sou
 $("#chat-form").addEventListener("submit", async (event) => { event.preventDefault(); const question = $("#question").value.trim(); if (!question) return; $("#chat-error").textContent = ""; addMessage("user", question); $("#question").value = ""; const loading = addMessage("assistant", "거시경제 지표를 요약해 답변을 만드는 중…", true); try { const response = await request("/api/chat", { method: "POST", body: JSON.stringify({ question }) }); loading.remove(); const toolNotice = response.tools_used?.length ? `\n\n[이번 답변에서 조회한 내부 도구: ${response.tools_used.join(", ")}]` : ""; addMessage("assistant", `${response.answer}${toolNotice}`); renderSummary(response.summary); await loadConversations(); } catch (error) { loading.remove(); $("#chat-error").textContent = `답변을 가져오지 못했습니다: ${error.message}`; } });
 $("#data-form").addEventListener("submit", async (event) => { event.preventDefault(); const id = $("#record-id").value; const payload = { date: $("#record-date").value, indicator: $("#record-indicator").value, value: Number($("#record-value").value), unit: $("#record-unit").value.trim(), source: $("#record-source").value.trim(), memo: $("#record-memo").value.trim() }; try { await request(id ? `/api/data/${id}` : "/api/data", { method: id ? "PUT" : "POST", body: JSON.stringify(payload) }); resetRecordForm(); await loadData(); } catch (error) { $("#data-error").textContent = error.message; } });
 $("#record-cancel").addEventListener("click", resetRecordForm); $("#export-csv").addEventListener("click", exportCsv);
+$("#server-retry").addEventListener("click", initializeApp);
 $("#theme-toggle").addEventListener("click", () => { document.body.classList.toggle("dark"); localStorage.setItem("tax-reset-theme", document.body.classList.contains("dark") ? "dark" : "light"); drawChart(records.filter((record) => record.indicator === "household_delinquency_rate").slice(-30)); });
 if (localStorage.getItem("tax-reset-theme") === "dark") document.body.classList.add("dark");
-Promise.all([loadData(), loadConversations()]).then(() => { $("#connection-status").textContent = "데이터와 연결되었습니다"; }).catch((error) => { $("#connection-status").textContent = "서버 연결을 확인하세요"; $("#chat-error").textContent = error.message; });
+initializeApp();

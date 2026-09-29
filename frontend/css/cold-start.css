@@ -1,0 +1,24 @@
+.connection-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.retry-button {
+  margin-top: 9px;
+  border: 1px solid var(--accent);
+  border-radius: 99px;
+  padding: 4px 10px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cold-start-note {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}

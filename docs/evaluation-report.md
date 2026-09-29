@@ -114,6 +114,7 @@
 | --- | --- |
 | Vercel 공개 페이지 응답 | HTTP 200, 제목 `체납리셋 Signal AI | 거시경제 AI 비서` |
 | Render 헬스체크 | HTTP 200 |
+| 콜드스타트 대비 | `/warmup` HTTP 200, `Cache-Control: no-store`, 화면의 자동·수동 재시도 UX |
 | 프런트 → 백엔드 CORS 사전 요청 | HTTP 200, 운영 Vercel Origin 허용 확인 |
 | Firestore 데이터 요약 | 240건, 기준금리·가계대출 연체율 두 지표 확인 |
 | 실제 AI 채팅 | `gpt-4o-mini` 응답 성공, `get_macro_summary` 사용 확인 |
