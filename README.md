@@ -158,6 +158,20 @@ pytest -q
 
 평가자 또는 동료 교육생은 별도 Python 파일 [`backend/scripts/verify_deployment.py`](backend/scripts/verify_deployment.py)로 공개 배포 상태를 재현할 수 있습니다. 기본 실행은 프런트엔드·`/health`·`/warmup`·`/docs`·요약 API·CORS만 읽기 전용으로 확인합니다.
 
+GitHub에서 Python 제출 파일만 바로 확인할 수 있도록 저장소 최상위 [`python_submission`](python_submission) 폴더도 제공합니다. 이 폴더에는 `.py` 파일만 있으며, 아래 두 실행 파일은 유지보수되는 검증 로직을 호출합니다.
+
+| Python 제출 파일 | 실행 내용 |
+| --- | --- |
+| [`run_public_check.py`](python_submission/run_public_check.py) | 프런트·Render API·CORS의 읽기 전용 공개 배포 검증 |
+| [`run_firestore_crud_check.py`](python_submission/run_firestore_crud_check.py) | 임시 관측값의 Firestore 생성→조회→수정→삭제 후 자동 정리 |
+
+저장소 최상위에서 바로 실행할 수도 있습니다.
+
+```powershell
+python python_submission/run_public_check.py
+python python_submission/run_firestore_crud_check.py
+```
+
 ```powershell
 cd backend
 python scripts/verify_deployment.py
