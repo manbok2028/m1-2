@@ -17,6 +17,7 @@
 | 보너스 통계/시각화 | 월별 평균 통계와 가계대출 연체율 Canvas 차트 | `/api/data/statistics`, `frontend/js/app.js` |
 | 보너스 UX | CSV 내보내기·다크 모드 | `frontend/js/app.js` |
 | Render 배포 | Web Service start/health/환경변수 설정 | `backend/render.yaml` |
+| 콜드스타트 UX·사전 깨우기 | `/warmup`으로 서버·Firestore 읽기 연결을 먼저 준비하고, 캐시 방지·자동 재시도·사용자 안내·수동 재시도 제공 | `main.py`, `frontend/js/app.js`, `README.md` |
 | Vercel 배포 | `API_BASE_URL`을 빌드 시 정적 설정 파일로 주입 | `frontend/vercel.json`, `scripts/generate-config.js` |
 | 보안·운영 | 키는 환경 변수, 배포 Firebase 누락 시 실행 차단, 개인 자료 미수집 | `.gitignore`, `config.py`, `repository.py` |
 | 체납 분석 한계 | 연체율은 조세 체납 대리 지표이며 개인 판단을 금지 | `README.md`, `service-plan.md`, `ai.py` |

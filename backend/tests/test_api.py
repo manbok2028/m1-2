@@ -18,6 +18,19 @@ def test_health_and_warmup_are_ready_and_not_cached():
         assert warmup.headers["cache-control"] == "no-store"
 
 
+def test_warmup_allows_the_deployed_vercel_origin():
+    with TestClient(app) as client:
+        response = client.options(
+            "/warmup",
+            headers={
+                "Origin": "https://m1-2-manbok2028s-projects.vercel.app",
+                "Access-Control-Request-Method": "GET",
+            },
+        )
+        assert response.status_code == 200
+        assert response.headers["access-control-allow-origin"] == "https://m1-2-manbok2028s-projects.vercel.app"
+
+
 def test_data_crud_summary_chat_and_conversation_history():
     with TestClient(app) as client:
         initial = client.get("/api/data")
