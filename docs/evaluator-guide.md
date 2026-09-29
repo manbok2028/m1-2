@@ -108,6 +108,7 @@ Swagger UI에서 아래 순서로 실행하면 UI가 실제 서버 API를 사용
 | [README](../README.md) | 서비스 목적·구조·로컬 실행·환경 변수 개요를 볼 때 |
 | [미션 충족표](mission-compliance.md) | 요구조건과 파일 단위 구현 근거를 빠르게 대조할 때 |
 | [평가보고서](evaluation-report.md) | 기획·구현·배포·검증 과정을 상세히 검토할 때 |
+| [공개 배포·Firestore 실동작 증빙](live-deployment-evidence.md) | 프런트·`/health`·`/docs`·요약 API와 운영 Firestore CRUD의 실제 응답을 확인할 때 |
 | [배포 안내](deployment-guide.md) | Render/Vercel 설정과 재배포 절차를 확인할 때 |
 | [검증 체크리스트](verification-checklist.md) | 제출 전 테스트와 시연 항목을 점검할 때 |
 | [보너스 기능 안내](bonus-features.md) | GPT 도구 호출·MCP·UX 보너스를 확인할 때 |

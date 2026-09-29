@@ -120,7 +120,19 @@ python -m scripts.import_ecos
 | Backend | Render Web Service, Root `backend` | [Swagger API 문서](https://tax-reset-signal-ai-api.onrender.com/docs) |
 | Frontend | Vercel, Root `frontend` | [체납리셋 Signal AI](https://m1-2-manbok2028s-projects.vercel.app) |
 
-구체적인 설정은 [배포 안내](docs/deployment-guide.md)를, 평가 항목별 구현 위치는 [미션 충족표](docs/mission-compliance.md)를 참고하세요. 평가자가 공개 서비스·Swagger·요구조건을 빠르게 대조할 수 있도록 [평가자 확인 안내서](docs/evaluator-guide.md)를 제공하며, 동료 교육생·평가자에게 결과와 과정을 상세히 설명할 때는 [평가보고서](docs/evaluation-report.md)를 사용하세요.
+구체적인 설정은 [배포 안내](docs/deployment-guide.md)를, 평가 항목별 구현 위치는 [미션 충족표](docs/mission-compliance.md)를 참고하세요. 평가자가 공개 서비스·Swagger·요구조건을 빠르게 대조할 수 있도록 [평가자 확인 안내서](docs/evaluator-guide.md)를 제공하며, 프런트·백엔드 접속 및 Firestore CRUD의 실제 응답은 [공개 배포·Firestore 실동작 증빙](docs/live-deployment-evidence.md)에서 확인할 수 있습니다. 동료 교육생·평가자에게 결과와 과정을 상세히 설명할 때는 [평가보고서](docs/evaluation-report.md)를 사용하세요.
+
+### 제출 시점 실제 접속·저장소 동작 증빙
+
+2026-09-29 UTC에 공개 주소로 직접 요청해 다음 결과를 확인했습니다. 평가자는 각 링크를 열거나, 연결된 [상세 응답 캡처](docs/live-deployment-evidence.md)의 명령을 다시 실행해 재현할 수 있습니다.
+
+| 확인 대상 | 실제 결과 | 직접 확인 |
+| --- | --- | --- |
+| 프런트엔드 | HTTP `200`, 제목 `체납리셋 Signal AI \| 거시경제 AI 비서` | [Vercel 서비스](https://m1-2-manbok2028s-projects.vercel.app) |
+| 백엔드 상태 | HTTP `200`, `{"status":"ok","environment":"production"}` | [Render /health](https://tax-reset-signal-ai-api.onrender.com/health) |
+| Swagger 문서 | HTTP `200`, 제목 `Tax Reset Signal AI API - Swagger UI` | [Render /docs](https://tax-reset-signal-ai-api.onrender.com/docs) |
+| 데이터 요약 | HTTP `200`, 공개 시계열 `240`건 | [Render /api/data/summary](https://tax-reset-signal-ai-api.onrender.com/api/data/summary) |
+| Firestore CRUD | 생성 `201` → 조회 `200` → 수정 `200` → 삭제 `204`; 임시 검증 레코드 삭제 완료 | [CRUD 실동작 기록](docs/live-deployment-evidence.md#3-운영-firestore-crud-재현-증빙) |
 
 ## Render 콜드스타트 안내와 사전 깨우기
 
