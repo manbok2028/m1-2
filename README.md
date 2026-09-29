@@ -120,7 +120,7 @@ python -m scripts.import_ecos
 | Backend | Render Web Service, Root `backend` | [Swagger API 문서](https://tax-reset-signal-ai-api.onrender.com/docs) |
 | Frontend | Vercel, Root `frontend` | [체납리셋 Signal AI](https://m1-2-manbok2028s-projects.vercel.app) |
 
-구체적인 설정은 [배포 안내](docs/deployment-guide.md)를, 평가 항목별 구현 위치는 [미션 충족표](docs/mission-compliance.md)를 참고하세요. 동료 교육생·평가자에게 결과와 과정을 설명할 때는 [평가보고서](docs/evaluation-report.md)를 사용하세요.
+구체적인 설정은 [배포 안내](docs/deployment-guide.md)를, 평가 항목별 구현 위치는 [미션 충족표](docs/mission-compliance.md)를 참고하세요. 평가자가 공개 서비스·Swagger·요구조건을 빠르게 대조할 수 있도록 [평가자 확인 안내서](docs/evaluator-guide.md)를 제공하며, 동료 교육생·평가자에게 결과와 과정을 상세히 설명할 때는 [평가보고서](docs/evaluation-report.md)를 사용하세요.
 
 ## Render 콜드스타트 안내와 사전 깨우기
 
