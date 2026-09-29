@@ -153,3 +153,18 @@ pytest -q
 ```
 
 자동 검증은 지표별 기본 통계·추세·월별 집계와 CRUD·요약·채팅 자동저장·대화 불러오기 흐름을 다룹니다. 제출 화면과 배포 확인은 [검증 체크리스트](docs/verification-checklist.md)에 정리했습니다.
+
+### 독립 Python 배포 검증 파일
+
+평가자 또는 동료 교육생은 별도 Python 파일 [`backend/scripts/verify_deployment.py`](backend/scripts/verify_deployment.py)로 공개 배포 상태를 재현할 수 있습니다. 기본 실행은 프런트엔드·`/health`·`/warmup`·`/docs`·요약 API·CORS만 읽기 전용으로 확인합니다.
+
+```powershell
+cd backend
+python scripts/verify_deployment.py
+```
+
+운영 Firestore CRUD까지 확인하려면 아래처럼 실행합니다. 이 옵션은 검증용 공개 관측값 1건을 생성·조회·수정한 뒤 `finally` 블록에서 삭제하므로, 실제 운영 데이터를 남기지 않습니다.
+
+```powershell
+python scripts/verify_deployment.py --verify-crud --json-output deployment-verification.json
+```

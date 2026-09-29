@@ -99,3 +99,5 @@ summary=200
 4. 테스트 데이터는 평가 종료 전 반드시 `DELETE`로 제거합니다.
 
 전체 평가 흐름은 [평가자 확인 안내서](evaluator-guide.md), 구현 파일 대조는 [미션 충족표](mission-compliance.md)에서 이어서 확인할 수 있습니다.
+
+동일 검증은 독립 Python 파일 [`backend/scripts/verify_deployment.py`](../backend/scripts/verify_deployment.py)로도 재현할 수 있습니다. 기본 실행은 읽기 전용이고, `--verify-crud`를 명시했을 때만 임시 관측값을 생성한 뒤 자동 삭제합니다.
